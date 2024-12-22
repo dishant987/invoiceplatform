@@ -15,6 +15,11 @@ enum Gender {
   female
 }
 
+enum InvoiceStatus {
+  PAID
+  PENDING
+}
+
 model User {
   id            String          @id @default(cuid())
   firstName     String?
@@ -28,13 +33,44 @@ model User {
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
+  invoices      Invoice[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model LineItem {
+  id          String @id @default(uuid()) // Unique identifier
+  description String
+  quantity    Int    @default(1)
+  rate        Float  @default(0.00)
+  amount      Float  @default(0.00)
+
+  invoiceId String
+  invoice   Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade) // Relation back to Invoice
 }
 
 model Invoice {
-  id            String          @id @default(cuid())
+  id            String        @id @default(cuid())
+  invoiceNumber String        @unique
+  draft         String
+  currency      String
+  status        InvoiceStatus @default(PENDING)
+  fromName      String
+  fromEmail     String
+  fromAddress   String
+  toName        String
+  toEmail       String
+  toAddress     String
+  date          DateTime
+  dueDate       DateTime
+  notes         String?
+  lineItems     LineItem[]
+  total         Float  @default(0.00)
+  subTotal      Float  @default(0.00)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  User          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
 }
 
 model Account {

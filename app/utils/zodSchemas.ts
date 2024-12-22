@@ -1,3 +1,4 @@
+import Decimal from "decimal.js";
 import { z } from "zod";
 
 export const onboardingSchema = z.object({
@@ -55,5 +56,60 @@ export const invoiceFormSchema = z.object({
   ),
   subTotal: z.number(),
   total: z.number(),
+  notes: z.optional(z.string()),
+});
+
+const DecimalSchema = z.custom<Decimal>((val) => val instanceof Decimal, {
+  message: "Must be a Decimal object",
+});
+
+export const editInvoiceSchema = z.object({
+  draft: z.string().min(1, "Draft is required"),
+  invoiceNumber: z.string(),
+  currency: z.string(),
+  fromName: z.string().min(1, "From Name is required"),
+  fromEmail: z.string().email("Invalid email address"),
+  fromAddress: z.string().min(1, "From Address is required"),
+  toName: z.string().min(1, "To Name is required"),
+  toEmail: z.string().email("Invalid email address"),
+  toAddress: z.string().min(1, "To Address is required"),
+  date: z.string().refine(
+    (date) => {
+      const selectedDate = new Date(date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return selectedDate >= today;
+    },
+    {
+      message: "Invoice date cannot be in the past",
+    }
+  ),
+  dueDate: z.string().refine(
+    (date) => {
+      const selectedDate = new Date(date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return selectedDate > today;
+    },
+    {
+      message: "Due date cannot be in the past",
+    }
+  ),
+  lineItems: z.array(
+    z.object({
+      description: z.string().min(1, "Description is required"),
+      quantity: DecimalSchema.refine((val) => val.gte(new Decimal(1)), {
+        message: "Quantity must be at least 1",
+      }),
+      rate: DecimalSchema.refine((val) => val.gte(new Decimal(0)), {
+        message: "Rate must be non-negative",
+      }),
+      amount: DecimalSchema.refine((val) => val.gte(new Decimal(0)), {
+        message: "Amount must be non-negative",
+      }),
+    })
+  ),
+  subTotal: DecimalSchema,
+  total: DecimalSchema,
   notes: z.string().optional(),
 });

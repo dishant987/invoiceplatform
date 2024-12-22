@@ -2,7 +2,13 @@ import { ReactNode } from "react";
 import { requireUser } from "../utils/hooks";
 import Link from "next/link";
 import { LogOutIcon, MenuIcon, Sidebar, User2Icon } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "../utils/auth";
-import { ModeToggle } from "@/components/ui/toggle";
+// import { ModeToggle } from "@/components/ui/toggle";
 import DashboardLinks from "../components/DashboardLinks";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
@@ -55,7 +61,6 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
                   Invoice <span className="text-blue-600">Dishant</span>
                 </p>
               </Link>
-              <Sidebar className="h-6 w-6 ml-auto cursor-pointer" />
             </div>
             <div className="flex-1">
               <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
@@ -74,13 +79,22 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
               </SheetTrigger>
 
               <SheetContent side={"left"}>
-                <nav className="grid gap-2 mt-10"></nav>
+                <SheetHeader>
+                  <SheetTitle>Invoice Dishant</SheetTitle>
+                </SheetHeader>
+                <nav className="grid gap-1 mt-6">
+                  <DashboardLinks />
+                </nav>
               </SheetContent>
             </Sheet>
+           
+
+            {/* <Sidebar className="h-6 w-6 cursor-pointer md:hidden" /> */}
             <div className="flex items-center ml-auto gap-4">
-              <div>
+              {/* <div>
                 <ModeToggle />
-              </div>
+              </div> */}
+
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -128,7 +142,9 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
               </DropdownMenu>
             </div>
           </header>
-          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-4 lg:p-6">{children}</main>
+          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-4 lg:p-6">
+            {children}
+          </main>
         </div>
       </div>
     </>

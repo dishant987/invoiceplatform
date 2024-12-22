@@ -6,9 +6,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-    BookMarked,
   CheckCircle,
   DownloadCloudIcon,
+  EyeIcon,
   Mail,
   MoreHorizontalIcon,
   PencilIcon,
@@ -16,18 +16,23 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export function InvoiceActions() {
+export function InvoiceActions({ invoiceId }: { invoiceId: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button size={"icon"} variant="outline">
-          <MoreHorizontalIcon className="h-4 w-4" />
+          <MoreHorizontalIcon />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={""}>
+          <Link href={`/dashboard/invoices/${invoiceId}/edit`}>
             <PencilIcon className="mr-2 h-4 w-4" /> Edit Invoice
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={`/dashboard/invoices/view/${invoiceId}`}>
+            <EyeIcon className="mr-2 h-4 w-4" /> View Invoice
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
@@ -41,7 +46,7 @@ export function InvoiceActions() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={""}>
+          <Link href={`/dashboard/invoices/${invoiceId}/delete`}>
             <Trash2 className="mr-2 h-4 w-4" /> Delete Invoice
           </Link>
         </DropdownMenuItem>

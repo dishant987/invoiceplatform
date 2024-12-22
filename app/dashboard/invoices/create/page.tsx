@@ -24,11 +24,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineItem } from "../../_components/LineItem";
-import { useEffect } from "react";
+import { useEffect, useTransition } from "react";
 import { generateUniqueInvoiceNumber } from "@/app/utils/invoiceUtils";
 import { invoiceFormSchema } from "@/app/utils/zodSchemas";
+import { Spinner } from "@/components/ui/Spinner";
+import { toast } from "sonner";
+import { InvoiceSubmit } from "@/actions/invoiceSubmit";
+import { redirect } from "next/navigation";
 
 export default function InvoiceForm() {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof invoiceFormSchema>>({
     resolver: zodResolver(invoiceFormSchema),
     defaultValues: {
@@ -87,20 +92,33 @@ export default function InvoiceForm() {
   }
 
   function OnSubmit(values: z.infer<typeof invoiceFormSchema>) {
-    console.log("Form submitted:", values);
-    console.log(values);
+    try {
+      startTransition(async () => {
+        const data = await InvoiceSubmit(values);
+        if (data?.error) {
+          toast.error(data.error);
+        }
+        if (data?.success) {
+          toast.success(data.success);
+          redirect("/dashboard/invoices");
+        }
+      });
+    } catch (error) {
+      console.error("Error creating invoice:", error);
+      toast.error("Something went wrong. Please try again later");
+    }
   }
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">Invoice Form</CardTitle>
+        <CardTitle className="text-3xl text-center font-bold">Invoice Form</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(OnSubmit)} className="space-y-8">
             <div className="flex items-center gap-4">
-              <Badge className="mr-2">Draft</Badge>
+              <Badge className="mr-2 mt-5">Draft</Badge>
               <FormField
                 control={form.control}
                 name="draft"
@@ -265,11 +283,7 @@ export default function InvoiceForm() {
                   <FormItem>
                     <FormLabel>Due Date</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        type="date"
-                        min={new Date().toISOString()}
-                      />
+                      <Input {...field} type="date" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -336,9 +350,14 @@ export default function InvoiceForm() {
               )}
             />
 
-            <Button type="submit" disabled={!hasValidLineItems}>
-              Submit Invoice
-            </Button>
+            <div className="flex justify-end">
+              <Button type="submit" disabled={!hasValidLineItems || isPending}>
+                {isPending && (
+                  <Spinner className=" dark:text-black text-white " />
+                )}{" "}
+                Submit Invoice
+              </Button>
+            </div>
           </form>
         </Form>
       </CardContent>

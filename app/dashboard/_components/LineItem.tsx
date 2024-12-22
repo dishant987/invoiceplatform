@@ -48,7 +48,8 @@ export function LineItem({ index, remove }: LineItemProps) {
         <Label htmlFor={`lineItems.${index}.rate`}>Rate</Label>
         <Input
           type="number"
-          min="0"
+          step={0.01}
+          min={0}
           {...register(`lineItems.${index}.rate`, { valueAsNumber: true })}
         />
       </div>
@@ -56,7 +57,9 @@ export function LineItem({ index, remove }: LineItemProps) {
         <Label htmlFor={`lineItems.${index}.amount`}>Amount</Label>
         <Input
           type="number"
-          value={watch(`lineItems.${index}.amount`)}
+
+          min={0}
+          {...register(`lineItems.${index}.amount`, { valueAsNumber: true })}
           readOnly
         />
       </div>
