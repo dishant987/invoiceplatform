@@ -82,7 +82,11 @@ export async function GET(
     pdf.text(lineItem.description, 20, yPosition);
     pdf.text(lineItem.quantity.toString(), 80, yPosition);
     pdf.text(`${lineItem.rate.toFixed(2)} ${invoice.currency}`, 120, yPosition);
-    pdf.text(`${lineItem.amount.toFixed(2)} ${invoice.currency}`, 160, yPosition);
+    pdf.text(
+      `${lineItem.amount.toFixed(2)} ${invoice.currency}`,
+      160,
+      yPosition
+    );
 
     // Draw a horizontal line below each line item
     pdf.line(20, yPosition + 2, 200, yPosition + 2);
@@ -99,7 +103,7 @@ export async function GET(
 
   pdf.text(`Subtotal (${invoice.currency}):`, 120, yPosition);
   pdf.text(
-    `${invoice.subtotal.toFixed(2)} ${invoice.currency}`,
+    `${invoice.subTotal.toFixed(2)} ${invoice.currency}`,
     160,
     yPosition
   );

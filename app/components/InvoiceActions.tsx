@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,8 +16,23 @@ import {
   Trash2,
 } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export function InvoiceActions({ invoiceId }: { invoiceId: string }) {
+  
+  const handlerSendReminderEmail = async () => {
+    toast.promise(
+      fetch(`/api/reminderEmail/${invoiceId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }).then((res) => res.json()),
+      {
+        loading: "Sending email...",
+        success: "Email sent successfully",
+        error: "Error sending email",
+      }
+    );
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,14 +52,12 @@ export function InvoiceActions({ invoiceId }: { invoiceId: string }) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={""}>
+          <Link target="_blank" href={`/api/invoice/${invoiceId}`}>
             <DownloadCloudIcon className="mr-2 h-4 w-4" /> Download Invoice
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={""}>
-            <Mail className="mr-2 h-4 w-4" /> Reminder Email
-          </Link>
+        <DropdownMenuItem onClick={handlerSendReminderEmail}>
+          <Mail className="mr-2 h-4 w-4" /> Reminder Email
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href={`/dashboard/invoices/${invoiceId}/delete`}>

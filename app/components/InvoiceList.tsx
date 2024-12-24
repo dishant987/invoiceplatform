@@ -23,6 +23,9 @@ export async function InvoiceList() {
         <TableHeader className="bg-gray-100 dark:bg-gray-800">
           <TableRow>
             <TableHead className="px-4 py-2 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
+              ID
+            </TableHead>
+            <TableHead className="px-4 py-2 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
               Invoice ID
             </TableHead>
             <TableHead className="px-4 py-2 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
@@ -43,11 +46,14 @@ export async function InvoiceList() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.map((invoice) => (
+          {data?.map((invoice, index) => (
             <TableRow
               key={invoice.id}
               className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
+              <TableCell className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
+                {index + 1}
+              </TableCell>
               <TableCell className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
                 {invoice.invoiceNumber}
               </TableCell>
@@ -77,9 +83,7 @@ export async function InvoiceList() {
                 {moment(invoice.createdAt).format("MMM D, YYYY")}
               </TableCell>
               <TableCell className="px-4 py-2 text-right border-b border-gray-200 dark:border-gray-700">
-                <InvoiceActions
-                  invoiceId={invoice.id}
-                />
+                <InvoiceActions invoiceId={invoice.id} />
               </TableCell>
             </TableRow>
           ))}

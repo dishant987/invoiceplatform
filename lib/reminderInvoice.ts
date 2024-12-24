@@ -29,10 +29,11 @@ interface invoiceFormSchema {
   subTotal: number;
   total: number;
   invoiceId: string;
+  currency: string;
   lineItems: LineItem[];
 }
 
-export async function sendInvoiceMail(
+export async function sendReminderInvoiceMail(
   toEmail: string,
   invoiceDetails: invoiceFormSchema
 ) {
@@ -40,14 +41,14 @@ export async function sendInvoiceMail(
     const mailOptions = {
       from: process.env.EMAIL_SERVER_USER,
       to: toEmail,
-      subject: `Invoice #${invoiceDetails.invoiceNumber}`,
+      subject: `Reminder Payment for  Invoice #${invoiceDetails.invoiceNumber}`,
       html: `
       <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invoice</title>
+  <title>Reminder Invoice</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -126,7 +127,8 @@ export async function sendInvoiceMail(
       <h1>Invoice #${invoiceDetails.invoiceNumber}</h1>
     </div>
     <div class="content">
-      <h2>Hello, ${invoiceDetails.toName}</h2>
+      <h2>Hello, ${invoiceDetails.toName} 👋 </h2>
+      <h3 style="color: #0066cc;">Payment Reminder</h3>
       <p>
         I hope this email finds you well. Please find your invoice details below.
       </p>
@@ -136,7 +138,9 @@ export async function sendInvoiceMail(
         <li><strong>To:</strong> ${invoiceDetails.toName}</li>
         <li><strong>Date:</strong> ${invoiceDetails.date}</li>
         <li><strong>Due Date:</strong> ${invoiceDetails.dueDate}</li>
-        <li><strong>Total Amount:</strong> ${invoiceDetails.total}</li>
+        <li><strong>Total Amount:</strong> ${invoiceDetails.total} ${
+        invoiceDetails.currency
+      } </li>
       </ul>
     
       <p>
@@ -160,10 +164,10 @@ export async function sendInvoiceMail(
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.messageId);
+    console.log("Reminder Email sent:", info.messageId);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error("Error sending invoice email:", error);
+    console.error("Error sending reminder invoice email:", error);
     return { success: false, error };
   }
 }

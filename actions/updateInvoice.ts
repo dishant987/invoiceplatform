@@ -2,9 +2,13 @@
 import { requireUser } from "@/app/utils/hooks";
 import { invoiceFormSchema } from "@/app/utils/zodSchemas";
 import prisma from "@/lib/db";
+import { updateInvoiceMail } from "@/lib/upadeInvoiceMail";
 import { z } from "zod";
 
-export const updateInvoice = async (id: string, values: z.infer<typeof invoiceFormSchema>) => {
+export const updateInvoice = async (
+  id: string,
+  values: z.infer<typeof invoiceFormSchema>
+) => {
   const validated = invoiceFormSchema.safeParse(values);
   console.log(validated);
   if (!validated.success) {
@@ -40,7 +44,27 @@ export const updateInvoice = async (id: string, values: z.infer<typeof invoiceFo
       },
     });
 
-    return { success: "Invoice updated successfully" };
+    const mail = await updateInvoiceMail(values.toEmail, {
+      invoiceId: invoice.id,
+      invoiceNumber: values.invoiceNumber,
+      fromName: values.fromName,
+      fromEmail: values.fromEmail,
+      toName: values.toName,
+      toEmail: values.toEmail,
+      date: values.date,
+      dueDate: values.dueDate,
+      subTotal: values.subTotal,
+      total: values.total,
+      lineItems: values.lineItems,
+    });
+
+    if (!mail.success) {
+      return { error: "Failed to send invoice. Please try again later." };
+    }
+
+    console.log(mail);
+
+    return { success: "Invoice updated successfully and sent successfully" };
   } catch (error) {
     console.error("Error updating user:", error);
     return { error: "Failed to update user. Please try again later." };

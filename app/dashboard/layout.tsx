@@ -23,6 +23,7 @@ import { signOut } from "../utils/auth";
 import DashboardLinks from "../components/DashboardLinks";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 async function getUser(userId: string) {
   const data = await prisma.user.findUnique({
@@ -56,7 +57,7 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
           <div className="flex flex-col max-h-screen h-full gap-2">
             <div className="h-14 flex items-center border-b px-4 lg:h-[60px] lg:px-6">
               <Link href="/" className="flex items-center gap-4">
-                Logo
+               <Image src="/invoice.png" alt="logo" width={50} height={50} />
                 <p className="text-xl font-bold">
                   Invoice <span className="text-blue-600">Dishant</span>
                 </p>

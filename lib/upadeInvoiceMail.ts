@@ -32,7 +32,7 @@ interface invoiceFormSchema {
   lineItems: LineItem[];
 }
 
-export async function sendInvoiceMail(
+export async function updateInvoiceMail(
   toEmail: string,
   invoiceDetails: invoiceFormSchema
 ) {
@@ -47,7 +47,7 @@ export async function sendInvoiceMail(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invoice</title>
+  <title>Invoice Update</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -126,7 +126,7 @@ export async function sendInvoiceMail(
       <h1>Invoice #${invoiceDetails.invoiceNumber}</h1>
     </div>
     <div class="content">
-      <h2>Hello, ${invoiceDetails.toName}</h2>
+      <h2>Updated Invoice for ${invoiceDetails.toName}</h2>
       <p>
         I hope this email finds you well. Please find your invoice details below.
       </p>
