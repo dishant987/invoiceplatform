@@ -35,7 +35,7 @@ export default function RootLayout({
           defaultTheme="system"
         > */}
         {children}
-        <Toaster />
+        <Toaster richColors={true} closeButton />
         {/* </ThemeProvider> */}
       </body>
     </html>

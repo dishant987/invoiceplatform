@@ -18,8 +18,13 @@ import {
 import Link from "next/link";
 import { toast } from "sonner";
 
-export function InvoiceActions({ invoiceId }: { invoiceId: string }) {
-  
+export function InvoiceActions({
+  invoiceId,
+  status,
+}: {
+  invoiceId: string;
+  status: string;
+}) {
   const handlerSendReminderEmail = async () => {
     toast.promise(
       fetch(`/api/reminderEmail/${invoiceId}`, {
@@ -64,11 +69,13 @@ export function InvoiceActions({ invoiceId }: { invoiceId: string }) {
             <Trash2 className="mr-2 h-4 w-4" /> Delete Invoice
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={""}>
-            <CheckCircle className="mr-2 h-4 w-4" /> Mark as Paid
-          </Link>
-        </DropdownMenuItem>
+        {status !== "PAID" && (
+          <DropdownMenuItem asChild>
+            <Link href={`/dashboard/invoices/${invoiceId}/paid`}>
+              <CheckCircle className="mr-2 h-4 w-4" /> Mark as Paid
+            </Link>
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

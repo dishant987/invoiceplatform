@@ -1,4 +1,4 @@
-import { deleteInvoice } from "@/actions/deleteInvoice";
+import { markAsPaid } from "@/actions/markAsPaid";
 import { SubmitButton } from "@/app/components/SubmitButtons";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -16,21 +16,21 @@ import React from "react";
 
 type Params = Promise<{ invoiceId: string }>;
 
-const DeleteInvoice = async ({ params }: { params: Params }) => {
+const MarkInvoiceAsPaid = async ({ params }: { params: Params }) => {
   const { invoiceId } = await params;
 
   return (
     <div className="flex flex-1 items-center justify-center">
       <Card className="max-w-[500px]">
         <CardHeader>
-          <CardTitle className="text-3xl">Delete Invoice</CardTitle>
+          <CardTitle className="text-3xl">Mark Invoice as Paid ?</CardTitle>
           <CardDescription>
-            Are you sure you want to delete this invoice?
+            Are you sure you want to mark this invoice as paid?
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Image
-            src="/warning.gif"
+            src="/paid.gif"
             alt="Warning"
             width={500}
             height={500}
@@ -48,13 +48,13 @@ const DeleteInvoice = async ({ params }: { params: Params }) => {
           <form
             action={async () => {
               "use server";
-              await deleteInvoice(invoiceId);
+              await markAsPaid(invoiceId);
               redirect("/dashboard/invoices");
             }}
           >
             <SubmitButton
-              className={buttonVariants({ variant: "destructive" })}
-              text="Delete"
+              className=" bg-green-500 hover:bg-green-700 text-white  "
+              text="Mark as Paid!"
             />
           </form>
         </CardFooter>
@@ -63,4 +63,4 @@ const DeleteInvoice = async ({ params }: { params: Params }) => {
   );
 };
 
-export default DeleteInvoice;
+export default MarkInvoiceAsPaid;

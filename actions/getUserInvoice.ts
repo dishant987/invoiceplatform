@@ -12,6 +12,7 @@ export async function getUserInvoice(userId: string) {
       createdAt: true,
       status: true,
       total: true,
+      currency: true,
     },
     orderBy: {
       createdAt: "desc",

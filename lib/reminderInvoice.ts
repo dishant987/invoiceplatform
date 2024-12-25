@@ -48,26 +48,26 @@ export async function sendReminderInvoiceMail(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reminder Invoice</title>
+  <title>Payment Reminder</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9f9f9;
-      color: #333333;
+      background-color: #f5f5f5;
+      color: #333;
     }
     .container {
       max-width: 600px;
-      margin: 20px auto;
+      margin: 30px auto;
       background-color: #ffffff;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       font-size: 16px;
     }
     .header {
-      background-color: #0066cc;
+      background-color: #0056b3;
       color: #ffffff;
       text-align: center;
       padding: 20px;
@@ -77,15 +77,15 @@ export async function sendReminderInvoiceMail(
       font-size: 24px;
     }
     .content {
-      padding: 20px 30px;
+      padding: 25px 30px;
     }
     .content h2 {
       margin-top: 0;
-      color: #0066cc;
-      font-size: 22px;
+      color: #0056b3;
+      font-size: 20px;
     }
     .content p {
-      margin: 10px 0;
+      margin: 12px 0;
       line-height: 1.6;
     }
     .content ul {
@@ -93,73 +93,64 @@ export async function sendReminderInvoiceMail(
       margin: 10px 0;
     }
     .content li {
-      margin: 5px 0;
+      margin: 8px 0;
     }
     .button {
-        display: inline-block;
-        padding: 12px 24px;
-        background-color: #0066cc;
-        color: #ffffff !important;
-        text-decoration: none;
-        border-radius: 10px;
-        font-weight: bold;
-        margin: 20px 0;
-      }
-      .button:hover {
-        background-color: #0052a3;
-      }
+      display: inline-block;
+      padding: 12px 20px;
+      color: #ffffff;
+      background-color: #0056b3;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #003f8a;
+    }
     .footer {
       background-color: #f8f9fa;
       text-align: center;
       padding: 15px;
       font-size: 12px;
-      color: #666666;
-    }
-    .line-item {
-      margin: 5px 0;
-      padding-left: 10px;
+      color: #666;
+      border-top: 1px solid #eaeaea;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>Invoice #${invoiceDetails.invoiceNumber}</h1>
+      <h1>Payment Reminder: Invoice #${invoiceDetails.invoiceNumber}</h1>
     </div>
     <div class="content">
-      <h2>Hello, ${invoiceDetails.toName} 👋 </h2>
-      <h3 style="color: #0066cc;">Payment Reminder</h3>
-      <p>
-        I hope this email finds you well. Please find your invoice details below.
-      </p>
-      <p><strong>Invoice Details:</strong></p>
+      <h2>Hello ${invoiceDetails.toName},</h2>
+      <p>We hope this message finds you well. This is a friendly reminder that payment for the following invoice is due:</p>
       <ul>
         <li><strong>From:</strong> ${invoiceDetails.fromName}</li>
         <li><strong>To:</strong> ${invoiceDetails.toName}</li>
-        <li><strong>Date:</strong> ${invoiceDetails.date}</li>
+        <li><strong>Invoice Date:</strong> ${invoiceDetails.date}</li>
         <li><strong>Due Date:</strong> ${invoiceDetails.dueDate}</li>
         <li><strong>Total Amount:</strong> ${invoiceDetails.total} ${
         invoiceDetails.currency
-      } </li>
+      }</li>
       </ul>
-    
-      <p>
-        You can download your invoice by clicking the button below:
-      </p>
+      <p>To settle this invoice, you can download it using the button below:</p>
       <a href="http://localhost:3000/api/invoice/${
         invoiceDetails.invoiceId
-      }" class="button">Download Invoice</a>
-      <p>
-        If you have any questions, feel free to reply to this email.
-      </p>
-      <p>Thank you for your business!</p>
+      }" class="button" style="color: #ffffff;">Download Invoice</a>
+      <p>If you have already made the payment, please disregard this message. Feel free to contact us if you have any questions or need assistance.</p>
+      <p>Thank you for your prompt attention to this matter!</p>
     </div>
     <div class="footer">
-      © ${new Date().getFullYear()} Your Company. All rights reserved.
+      &copy; ${new Date().getFullYear()} Your Company. All rights reserved.
     </div>
   </div>
 </body>
 </html>
+
       `,
     };
 
