@@ -19,7 +19,7 @@ const Navbar = () => {
       >
         <Link className="flex items-center gap-2" href={"/"}>
           <Image
-            src="/Invoice.png"
+            src="/invoice.png"
             alt="logo"
             width={100}
             height={100}
