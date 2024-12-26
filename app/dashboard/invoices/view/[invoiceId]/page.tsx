@@ -9,7 +9,7 @@ import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-export async function getInvoice(invoiceId: string) {
+async function getInvoice(invoiceId: string) {
   const session = await requireUser();
 
   if (!session?.user) {
