@@ -26,12 +26,10 @@ async function getInvoice(invoiceId: string) {
   return { data, lineItems };
 }
 
-export default async function ViewInvoice({
-  params,
-}: {
-  params: { invoiceId: string };
-}) {
-  const invoiceId = params.invoiceId;
+type Params = Promise<{ invoiceId: string }>;
+
+export default async function ViewInvoice({ params }: { params: Params }) {
+  const { invoiceId } = await params;
   const { data, lineItems } = await getInvoice(invoiceId);
   console.log(data);
   console.log(lineItems);
