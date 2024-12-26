@@ -1,4 +1,5 @@
 import { InvoiceList } from "@/app/components/InvoiceList";
+import { InvoiceTableSkeleton } from "@/app/components/InvoiceTableSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -9,9 +10,10 @@ import {
 } from "@/components/ui/card";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
 const Invoices = () => {
+  
   return (
     <>
       <Card>
@@ -23,13 +25,18 @@ const Invoices = () => {
                 View your invoices
               </CardDescription>
             </div>
-            <Link href={"/dashboard/invoices/create"} className={buttonVariants()}>
+            <Link
+              href={"/dashboard/invoices/create"}
+              className={buttonVariants()}
+            >
               <PlusIcon className="h-4 w-4" /> Create Invoice
             </Link>
           </div>
         </CardHeader>
         <CardContent>
-          <InvoiceList />
+          <Suspense fallback={<InvoiceTableSkeleton />}>
+            <InvoiceList />
+          </Suspense>
         </CardContent>
       </Card>
     </>

@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { EmptyInvoice } from "./EmptyInvoice";
 
 export async function InvoiceList() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const session = await requireUser();
   const data = await getUserInvoice(session.user?.id as string);
 
