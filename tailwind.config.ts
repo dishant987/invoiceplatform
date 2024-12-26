@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
-import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
 
 export default {
   darkMode: ["class"],
@@ -144,6 +146,6 @@ function addVariablesForColors({
   );
 
   addBase({
-    ":root": newVars,
+    ":root": newVars as unknown as string,
   });
 }
