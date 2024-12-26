@@ -31,11 +31,12 @@ import { useTransition } from "react";
 import { onboardUser } from "@/actions/onboarding";
 import { Button } from "@/components/ui/button";
 import { LucideLoaderPinwheel } from "lucide-react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function UserForm() {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   const form = useForm<z.infer<typeof onboardingSchema>>({
     resolver: zodResolver(onboardingSchema),
     defaultValues: {
@@ -51,7 +52,7 @@ export default function UserForm() {
         const data = await onboardUser(values);
         if (data?.success) {
           toast.success(data.success);
-          redirect("/dashboard");
+          router.push("/dashboard");
         }
         if (data?.error) {
           toast.error(data.error, {

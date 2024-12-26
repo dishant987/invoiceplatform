@@ -26,7 +26,7 @@ const page = async () => {
   }
   const data = await getData(session.user?.id as string);
   return (
-    <>
+    <Suspense fallback={<DashboardSkeleton />}>
       {data.length > 0 ? (
         <Suspense fallback={<DashboardSkeleton />}>
           <DashboardBlocks />
@@ -38,7 +38,7 @@ const page = async () => {
       ) : (
         <EmptyState />
       )}
-    </>
+    </Suspense>
   );
 };
 

@@ -21,7 +21,7 @@ const loaderVariants = {
   },
 };
 
-const Loading = () => {
+const loading = () => {
   return (
     <div className="loader-container">
       <motion.div
@@ -47,4 +47,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default loading;

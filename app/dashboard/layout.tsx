@@ -40,6 +40,8 @@ async function getUser(userId: string) {
   if (!data?.firstName || !data?.lastName || !data?.address) {
     redirect("/onboarding");
   }
+
+  return data;
 }
 
 const DashboardLayout = async ({ children }: { children: ReactNode }) => {
@@ -94,7 +96,12 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
               {/* <div>
                 <ModeToggle />
               </div> */}
-
+              <h1>
+                Hello👋&nbsp;
+                <span className="font-semibold text-blue-600">
+                  {data?.firstName}
+                </span>
+              </h1>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
