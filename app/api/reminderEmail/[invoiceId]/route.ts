@@ -10,10 +10,10 @@ export async function POST(
   }: {
     params: Promise<{ invoiceId: string }>;
   }
-) {
+): Promise<NextResponse> {
   const session = await requireUser();
   if (!session?.user) {
-    return { error: "User not found" };
+    return NextResponse.json({ error: "User not found" }, { status: 401 });
   }
 
   const { invoiceId } = await params;
@@ -41,7 +41,10 @@ export async function POST(
   });
 
   if (!mail) {
-    return { error: "Failed to send email" };
+    return NextResponse.json(
+      { error: "Failed to send email" },
+      { status: 500 }
+    );
   }
 
   return NextResponse.json(
