@@ -57,7 +57,7 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
           <div className="flex flex-col max-h-screen h-full gap-2">
             <div className="h-14 flex items-center border-b px-4 lg:h-[60px] lg:px-6">
               <Link href="/" className="flex items-center gap-4">
-               <Image src="/invoice.png" alt="logo" width={50} height={50} />
+                <Image src="/invoice.png" alt="logo" width={50} height={50} />
                 <p className="text-xl font-bold">
                   Invoice <span className="text-blue-600">Dishant</span>
                 </p>
@@ -88,7 +88,6 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
                 </nav>
               </SheetContent>
             </Sheet>
-           
 
             {/* <Sidebar className="h-6 w-6 cursor-pointer md:hidden" /> */}
             <div className="flex items-center ml-auto gap-4">

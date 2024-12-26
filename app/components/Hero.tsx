@@ -6,6 +6,7 @@ import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -27,7 +28,7 @@ const Hero = () => {
           )}
         >
           <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-            <span>✨ Introducing Invoice 1.0 </span>
+            <Link href="/dashboard/invoices">✨ Introducing Invoice 1.0 </Link>
             <ArrowRightIcon className="ml-1 w-5 h-5 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
           </AnimatedShinyText>
         </div>
