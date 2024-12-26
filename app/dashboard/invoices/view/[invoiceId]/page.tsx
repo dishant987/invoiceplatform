@@ -55,7 +55,7 @@ export default async function ViewInvoice({
               <Label>Status</Label>
               <Badge
                 variant={`${
-                  data?.status === "Paid" ? "default" : "destructive"
+                  data?.status === "PAID" ? "default" : "destructive"
                 }`}
                 className="w-[80px]"
               >
