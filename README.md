@@ -167,19 +167,32 @@ npm run build
 
 ```
 invoiceplatform/
+├── .next/                   # Next.js build output
+├── actions/                 # Server-side actions or utilities
+├── app/
+│   ├── (auth)/             # Authentication-related pages
+│   ├── api/                # API routes
+│   ├── components/         # Reusable components for app-specific features
+│   ├── dashboard/          # Dashboard-specific components and logic
+│   ├── fonts/              # Custom fonts
+│   ├── onboarding/         # Onboarding flow components
+│   ├── utils/              # Utility functions
+│   ├── verify/             # Email verification pages
+│   ├── globals.css         # Global styles
+│   ├── layout.tsx          # Layout component
+│   └── page.tsx            # Main entry point
+├── components/              # Shared reusable components
+├── hooks/                   # Custom hooks
+├── lib/                     # Libraries and utilities
+├── node_modules/            # Dependencies
 ├── prisma/                  # Prisma schema and migrations
 ├── public/                  # Static files
-├── src/
-│   ├── pages/
-│   │   ├── api/             # API routes
-│   │   ├── dashboard/       # Dashboard and analytics pages
-│   │   ├── auth/            # Authentication pages
-│   ├── components/          # Reusable UI components
-│   ├── hooks/               # Custom hooks
-│   ├── styles/              # Global styles
-│   ├── utils/               # Utility functions
 ├── .env                     # Environment variables
+├── .eslintrc.json           # ESLint configuration
+├── .gitignore               # Git ignore rules
 ├── package.json             # Dependencies and scripts
+├── tsconfig.json            # TypeScript configuration
+└── next.config.js           # Next.js configuration
 ```
 
 ---
