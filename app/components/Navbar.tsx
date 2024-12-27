@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import React from "react";
+import MorphingButton from "./morphing-button";
 
 const Navbar = () => {
   return (
@@ -23,22 +24,18 @@ const Navbar = () => {
             alt="logo"
             width={100}
             height={100}
-            className="transition-transform duration-300 ease-in-out hover:rotate-6"
+            className="transition-transform duration-300 md:w-24 w-16 ease-in-out hover:rotate-6"
           />
-          <h3 className="text-3xl font-bold">
+          <h3 className="md:text-3xl text-[20px] font-bold">
             Invoice <span className="text-yellow-600">Dishant</span>
           </h3>
         </Link>
       </motion.div>
-      <RainbowButton className="flex items-center gap-2">
-        <motion.div
-          whileHover={{ scale: 1.1, x: 10 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 200 }}
-        >
-          <Link href={"/login"}>Get Started</Link>
-        </motion.div>
-      </RainbowButton>
+      <MorphingButton
+        texts={["Get Started", "Login"]}
+        interval={2000}
+        href="/login"
+      />
     </motion.div>
   );
 };
