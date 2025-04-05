@@ -61,9 +61,13 @@ export function InvoiceActions({
             <DownloadCloudIcon className="mr-2 h-4 w-4" /> Download Invoice
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={handlerSendReminderEmail}>
-          <Mail className="mr-2 h-4 w-4" /> Reminder Email
-        </DropdownMenuItem>
+        {
+          status !== "PAID" && (
+            <DropdownMenuItem onClick={handlerSendReminderEmail}>
+              <Mail className="mr-2 h-4 w-4" /> Send Reminder Email
+            </DropdownMenuItem>
+          )
+        }
         <DropdownMenuItem asChild>
           <Link href={`/dashboard/invoices/${invoiceId}/delete`}>
             <Trash2 className="mr-2 h-4 w-4" /> Delete Invoice

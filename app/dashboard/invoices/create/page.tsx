@@ -64,7 +64,6 @@ export default function InvoiceForm() {
   });
 
   const watchLineItems = form.watch("lineItems");
-  console.log(watchLineItems);
   const hasValidLineItems = watchLineItems.some(
     (item) => item.description && item.quantity > 0 && item.rate >= 0
   );
